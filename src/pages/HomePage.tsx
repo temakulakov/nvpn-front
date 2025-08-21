@@ -118,63 +118,110 @@ export const HomePage: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* Navigation Buttons */}
-      <Box
+      {/* Main container with buttons */}
+      <Paper
+        elevation={8}
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
           width: '100%',
-          maxWidth: '300px',
-          marginBottom: '40px'
+          maxWidth: '400px',
+          padding: '30px',
+          marginBottom: '40px',
+          borderRadius: '20px',
+          background: 'rgba(110, 180, 99, 0.5)',
+          backdropFilter: 'blur(15px)',
+          border: '1px solid rgba(137, 230, 126, 0.3)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
         }}
       >
-        <Button
-          variant="contained"
-          startIcon={<ShoppingCartIcon />}
-          onClick={() => navigate({ to: '/prices' })}
-          sx={{
-            backgroundColor: 'rgba(137, 230, 126, 0.2)',
-            '&:hover': {
-              backgroundColor: 'rgba(137, 230, 126, 0.3)',
-            }
-          }}
-        >
-          {t('home.buySubscription')}
-        </Button>
-        
-        <Button
-          variant="outlined"
-          startIcon={<PersonIcon />}
-          onClick={() => navigate({ to: '/account' })}
-          sx={{
-            borderColor: '#89E67E',
-            color: '#89E67E',
-            '&:hover': {
-              borderColor: '#7DD56E',
-              backgroundColor: 'rgba(137, 230, 126, 0.1)',
-            }
-          }}
-        >
-          {t('home.account')}
-        </Button>
-        
-        <Button
-          variant="outlined"
-          startIcon={<LanguageIcon />}
-          onClick={() => navigate({ to: '/language' })}
-          sx={{
-            borderColor: '#89E67E',
-            color: '#89E67E',
-            '&:hover': {
-              borderColor: '#7DD56E',
-              backgroundColor: 'rgba(137, 230, 126, 0.1)',
-            }
-          }}
-        >
-          {t('home.language')}
-        </Button>
-      </Box>
+        <Stack spacing={3}>
+          {/* Buy Subscription button */}
+          <Button
+            variant="contained"
+            fullWidth
+            size="large"
+            startIcon={<ShoppingCartIcon />}
+            onClick={() => navigate({ to: '/prices' })}
+            sx={{
+              height: '56px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              background: '#6EB463',
+              '&:hover': {
+                background: '#89E67E',
+              }
+            }}
+          >
+            {t('home.buySubscription')}
+          </Button>
+
+          {/* My Account button */}
+          <Button
+            variant="outlined"
+            fullWidth
+            size="large"
+            startIcon={<PersonIcon />}
+            onClick={() => navigate({ to: '/account' })}
+            sx={{
+              height: '56px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: '#ffffff',
+              borderColor: '#89E67E',
+              '&:hover': {
+                borderColor: '#89E67E',
+                background: 'rgba(137, 230, 126, 0.1)',
+              }
+            }}
+          >
+            {t('home.myAccount')}
+          </Button>
+
+          {/* Bottom row with two buttons */}
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
+              variant="outlined"
+              fullWidth
+              size="large"
+              startIcon={<HelpIcon />}
+              sx={{
+                height: '48px',
+                fontSize: '16px',
+                color: '#ffffff',
+                borderColor: '#89E67E',
+                '&:hover': {
+                  borderColor: '#89E67E',
+                  background: 'rgba(137, 230, 126, 0.1)',
+                }
+              }}
+            >
+              {t('home.help')}
+            </Button>
+            
+            <Button
+              variant="outlined"
+              fullWidth
+              size="large"
+              startIcon={<LanguageIcon />}
+              onClick={() => navigate({ to: '/language' })}
+              sx={{
+                height: '48px',
+                fontSize: '16px',
+                color: '#ffffff',
+                borderColor: '#89E67E',
+                '&:hover': {
+                  borderColor: '#89E67E',
+                  background: 'rgba(137, 230, 126, 0.1)',
+                }
+              }}
+            >
+              {t('home.language')}
+            </Button>
+          </Box>
+        </Stack>
+      </Paper>
 
       {/* Footer */}
       <Box
