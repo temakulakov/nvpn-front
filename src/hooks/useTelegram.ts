@@ -49,12 +49,24 @@ export const useTelegram = () => {
   }, [])
 
   const showBackButton = useCallback((callback: () => void) => {
-    WebApp.BackButton.onClick(callback)
-    WebApp.BackButton.show()
+    console.log('useTelegram: showBackButton called with callback:', callback)
+    try {
+      WebApp.BackButton.onClick(callback)
+      WebApp.BackButton.show()
+      console.log('useTelegram: BackButton shown successfully')
+    } catch (error) {
+      console.error('useTelegram: Failed to show BackButton:', error)
+    }
   }, [])
 
   const hideBackButton = useCallback(() => {
-    WebApp.BackButton.hide()
+    console.log('useTelegram: hideBackButton called')
+    try {
+      WebApp.BackButton.hide()
+      console.log('useTelegram: BackButton hidden successfully')
+    } catch (error) {
+      console.error('useTelegram: Failed to hide BackButton:', error)
+    }
   }, [])
 
   const closeApp = useCallback(() => {

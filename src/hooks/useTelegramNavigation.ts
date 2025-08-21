@@ -8,9 +8,15 @@ export const useTelegramNavigation = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log('useTelegramNavigation: current pathname:', location.pathname)
+    
     // Показываем кнопку "Назад" только когда не на главной странице
     if (location.pathname !== '/') {
+      console.log('useTelegramNavigation: showing back button for path:', location.pathname)
+      
       showBackButton(() => {
+        console.log('useTelegramNavigation: back button clicked, navigating to home')
+        
         // Используем более надежный способ навигации
         if (location.pathname === '/prices') {
           navigate({ to: '/' })
@@ -24,11 +30,13 @@ export const useTelegramNavigation = () => {
         }
       })
     } else {
+      console.log('useTelegramNavigation: hiding back button (on home page)')
       hideBackButton()
     }
 
     // Очищаем обработчик при размонтировании
     return () => {
+      console.log('useTelegramNavigation: cleaning up back button')
       hideBackButton()
     }
   }, [location.pathname, navigate, showBackButton, hideBackButton])
