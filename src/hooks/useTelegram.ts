@@ -7,30 +7,15 @@ export const useTelegram = () => {
       // Инициализируем Telegram Mini App
       WebApp.ready()
       
-      // Настраиваем основной цвет
-      WebApp.setHeaderColor('#6EB463')
-      
-      // Настраиваем цвет фона
-      WebApp.setBackgroundColor('#242834')
-      
-      // Отключаем скролл в основном окне Telegram
-      WebApp.enableClosingConfirmation()
-      
       // Настраиваем viewport для мобильных устройств
       WebApp.expand()
       
-      // Настраиваем тему (светлая/темная)
-      WebApp.setThemeParams({
-        bg_color: '#242834',
-        text_color: '#ffffff',
-        hint_color: '#89E67E',
-        link_color: '#89E67E',
-        button_color: '#6EB463',
-        button_text_color: '#ffffff'
-      })
-      
-      // Отключаем скролл в основном окне
-      WebApp.disableScroll()
+      // Отключаем скролл в основном окне (если поддерживается)
+      try {
+        WebApp.disableScroll()
+      } catch (error) {
+        console.log('disableScroll not supported in this version')
+      }
       
       console.log('Telegram Mini App initialized successfully')
     } catch (error) {
@@ -39,38 +24,57 @@ export const useTelegram = () => {
   }, [])
 
   const showMainButton = useCallback((text: string, callback: () => void) => {
-    WebApp.MainButton.setText(text)
-    WebApp.MainButton.onClick(callback)
-    WebApp.MainButton.show()
+    try {
+      WebApp.MainButton.setText(text)
+      WebApp.MainButton.onClick(callback)
+      WebApp.MainButton.show()
+    } catch (error) {
+      console.error('Failed to show MainButton:', error)
+    }
   }, [])
 
   const hideMainButton = useCallback(() => {
-    WebApp.MainButton.hide()
+    try {
+      WebApp.MainButton.hide()
+    } catch (error) {
+      console.error('Failed to hide MainButton:', error)
+    }
   }, [])
 
   const showBackButton = useCallback((callback: () => void) => {
-    console.log('useTelegram: showBackButton called with callback:', callback)
     try {
-      WebApp.BackButton.onClick(callback)
-      WebApp.BackButton.show()
-      console.log('useTelegram: BackButton shown successfully')
+      // Проверяем, поддерживается ли BackButton
+      if (WebApp.BackButton && typeof WebApp.BackButton.onClick === 'function') {
+        WebApp.BackButton.onClick(callback)
+        WebApp.BackButton.show()
+      } else {
+        console.warn('BackButton not supported in this version, using fallback navigation')
+        // Fallback: сразу вызываем callback для навигации
+        callback()
+      }
     } catch (error) {
       console.error('useTelegram: Failed to show BackButton:', error)
+      // Fallback: сразу вызываем callback для навигации
+      callback()
     }
   }, [])
 
   const hideBackButton = useCallback(() => {
-    console.log('useTelegram: hideBackButton called')
     try {
-      WebApp.BackButton.hide()
-      console.log('useTelegram: BackButton hidden successfully')
+      if (WebApp.BackButton && typeof WebApp.BackButton.hide === 'function') {
+        WebApp.BackButton.hide()
+      }
     } catch (error) {
       console.error('useTelegram: Failed to hide BackButton:', error)
     }
   }, [])
 
   const closeApp = useCallback(() => {
-    WebApp.close()
+    try {
+      WebApp.close()
+    } catch (error) {
+      console.error('Failed to close app:', error)
+    }
   }, [])
 
   const getUser = useCallback(() => {

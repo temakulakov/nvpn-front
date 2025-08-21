@@ -19,18 +19,19 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({ children }) 
   const { showBackButton, hideBackButton, closeApp, WebApp } = useTelegram()
 
   useEffect(() => {
-    // Инициализируем кнопку закрытия
-    WebApp.enableClosingConfirmation()
+    // В версии 6.0 многие методы не поддерживаются
+    // Просто логируем инициализацию
+    console.log('TelegramProvider initialized, WebApp version:', WebApp.version)
   }, [WebApp])
 
   const showCloseButton = () => {
     // В Telegram Mini App кнопка закрытия доступна всегда
-    WebApp.enableClosingConfirmation()
+    console.log('Close button is always available in Telegram')
   }
 
   const hideCloseButton = () => {
     // В Telegram Mini App кнопку закрытия нельзя скрыть
-    // Но можно настроить её поведение
+    console.log('Close button cannot be hidden in Telegram')
   }
 
   const contextValue: TelegramContextType = {
